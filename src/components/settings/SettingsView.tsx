@@ -10,6 +10,7 @@ import {
   Mic,
   Monitor,
   Moon,
+  RefreshCw,
   ShieldCheck,
   Smartphone,
   Sparkles,
@@ -38,12 +39,22 @@ import type {
   TtsPlaybackSource,
 } from '../../types';
 
+import type { UpdateCheckStatus } from '../../hooks/useAppUpdate';
+
 interface SettingsViewProps {
   settings: AppSettings;
   onUpdateSettings: (patch: Partial<AppSettings>) => void;
   onOpenIOSGuide: (focus: 'install' | 'mic') => void;
   hasNativeInstallPrompt: boolean;
   onTriggerInstall: () => void;
+  appVersion: string;
+  buildTime: string;
+  updateStatus: UpdateCheckStatus;
+  updateAvailable: boolean;
+  updateMessage: string | null;
+  onCheckUpdate: () => void;
+  onApplyUpdate: () => void;
+  onForceReload: () => void;
 }
 
 const SPEED_PRESETS = [
@@ -59,6 +70,14 @@ export function SettingsView({
   onOpenIOSGuide,
   hasNativeInstallPrompt,
   onTriggerInstall,
+  appVersion,
+  buildTime,
+  updateStatus,
+  updateAvailable,
+  updateMessage,
+  onCheckUpdate,
+  onApplyUpdate,
+  onForceReload,
 }: SettingsViewProps) {
   const [env] = useState(() => getDeviceEnvironment());
   const [testState, setTestState] = useState<'idle' | 'loading' | 'playing'>(
@@ -699,6 +718,80 @@ export function SettingsView({
             >
               <Mic className="h-3.5 w-3.5" />
               iPhone 语音权限排查
+            </button>
+          </div>
+        </section>
+
+        {/* Section 5: Version & One-Tap Online Update */}
+        <section className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-800/60">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+                版本与在线更新
+              </h2>
+            </div>
+            <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">
+              v{appVersion}
+            </span>
+          </div>
+
+          <p className="mt-1.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+            构建时间：{buildTime} UTC · 在线更新仅刷新页面代码，你的金句本、复盘记录与 API Key 会完整保留。
+          </p>
+
+          {updateMessage && (
+            <div
+              className={`mt-2.5 rounded-xl px-3 py-2 text-[11px] leading-relaxed ${
+                updateAvailable
+                  ? 'bg-emerald-50 text-emerald-900 ring-1 ring-emerald-200 dark:bg-emerald-950/50 dark:text-emerald-200 dark:ring-emerald-800'
+                  : updateStatus === 'error'
+                    ? 'bg-rose-50 text-rose-800 ring-1 ring-rose-200 dark:bg-rose-950/50 dark:text-rose-200 dark:ring-rose-800'
+                    : 'bg-slate-50 text-slate-600 ring-1 ring-slate-200/70 dark:bg-slate-900/60 dark:text-slate-300 dark:ring-slate-700'
+              }`}
+            >
+              {updateMessage}
+            </div>
+          )}
+
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            {updateAvailable ? (
+              <button
+                type="button"
+                onClick={onApplyUpdate}
+                className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-emerald-600 text-xs font-semibold text-white shadow-xs transition hover:bg-emerald-700 active:scale-[0.98] dark:bg-emerald-500 dark:text-slate-950"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                立即更新到新版
+              </button>
+            ) : (
+              <button
+                type="button"
+                disabled={updateStatus === 'checking'}
+                onClick={onCheckUpdate}
+                className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-slate-900 text-xs font-semibold text-white transition hover:bg-slate-800 active:scale-[0.98] disabled:opacity-60 dark:bg-emerald-500 dark:text-slate-950"
+              >
+                {updateStatus === 'checking' ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    检查中...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="h-3.5 w-3.5" />
+                    一键检查更新
+                  </>
+                )}
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={onForceReload}
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-xl bg-slate-100 text-xs font-semibold text-slate-700 transition hover:bg-slate-200 active:scale-[0.98] dark:bg-slate-700 dark:text-slate-200"
+            >
+              <RefreshCw className="h-3.5 w-3.5" />
+              清缓存重载页面
             </button>
           </div>
         </section>
