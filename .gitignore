@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+.pnpm-store
+.npmrc
+
+# Build outputs
+dist
+dev-dist
+.vercel
+
+# Local env
+.env
+.env.local
+.env.*.local
+
+# OS metadata
+.DS_Store
+._*

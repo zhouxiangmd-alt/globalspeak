@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="55%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- Subtle globe meridian rings -->
+  <circle cx="256" cy="244" r="144" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="6"/>
+  <ellipse cx="256" cy="244" rx="74" ry="144" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="5"/>
+  <line x1="112" y1="244" x2="400" y2="244" stroke="rgba(255,255,255,0.12)" stroke-width="5"/>
+  <!-- Speech bubble silhouette -->
+  <path d="M148 164 C148 134 172 110 202 110 L310 110 C340 110 364 134 364 164 L364 282 C364 312 340 336 310 336 L228 336 L168 386 C160 393 148 387 148 376 Z" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.28)" stroke-width="6"/>
+  <!-- Voice equalizer waveform bars (emerald + crisp white) -->
+  <rect x="184" y="206" width="18" height="44" rx="9" fill="#a7f3d0"/>
+  <rect x="216" y="176" width="18" height="104" rx="9" fill="url(#accent)"/>
+  <rect x="247" y="152" width="18" height="152" rx="9" fill="#ffffff"/>
+  <rect x="278" y="182" width="18" height="92" rx="9" fill="url(#accent)"/>
+  <rect x="310" y="208" width="18" height="40" rx="9" fill="#a7f3d0"/>
+  <!-- Subtle medical cross spark top-right -->
+  <g transform="translate(342, 134)">
+    <rect x="-12" y="-4" width="24" height="8" rx="4" fill="#34d399"/>
+    <rect x="-4" y="-12" width="8" height="24" rx="4" fill="#34d399"/>
+  </g>
+</svg>

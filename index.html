@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+    />
+    <title>GlobalSpeak · 医生国际交流口语教练</title>
+    <meta
+      name="description"
+      content="专为参加国际学术会议与海外手术交流的医生打造的移动端语音沙盒与社交口语教练"
+    />
+    <!-- Theme & Safari Chrome -->
+    <meta name="theme-color" content="#f8fafc" id="meta-theme-color" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- iPhone / iPad Safari PWA Standalone Adaptation -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="GlobalSpeak" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <script>
+      // Prevent dark-mode FOUC and synchronize Safari status bar theme-color early
+      (function () {
+        try {
+          var raw = localStorage.getItem('globalspeak_settings_v1');
+          var theme = raw ? JSON.parse(raw).theme : 'system';
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = theme === 'dark' || (theme !== 'light' && prefersDark);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            var meta = document.getElementById('meta-theme-color');
+            if (meta) meta.setAttribute('content', '#0f172a');
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="h-full bg-slate-100 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+    <div id="root" class="h-full"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
